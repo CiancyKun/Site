@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+        <title>Prompt</title>
+    </head>
+
+    <body>
+      <div>
+          <button>Latest</button>
+      </div>
+
+      <div id="zonaDinamica">
+          Qui viene caricato il documento scelto
+      </div>
+    </body>
+
+    <script>
+
+        var documenti = document.getElementsByTagName("button");
+        for (var i = 0; i < documenti.length; i++) 
+        {
+            documenti[i].onclick = caricaDocumento;
+        }
+
+        function caricaDocumento(e) 
+        {
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = gestisciResponse;
+            httpRequest.open("POST", "" + e.target.innerHTML + ".txt", true);
+            httpRequest.send();                                // invia la richiesta
+        }
+
+        function gestisciResponse(e) 
+        {
+            if (e.target.readyState == XMLHttpRequest.DONE && e.target.status == 200) 
+            {                       
+                document.getElementById("zonaDinamica").innerHTML = e.target.responseText;
+            }
+        }
+
+    </script>  
+</html>
